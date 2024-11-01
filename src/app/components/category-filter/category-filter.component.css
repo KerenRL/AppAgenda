@@ -1,0 +1,17 @@
+.category-filter {
+  margin-top: 20px; /* Espacio superior */
+}
+
+.category-filter button {
+  margin: 5px 0; /* Espacio entre los botones */
+  width: 100%; /* Botones ocuparán todo el ancho */
+  background-color: #74b9ff; /* Color azul pastel */
+  color: white; /* Color del texto del botón */
+  border: none;
+  border-radius: 4px; /* Bordes redondeados */
+  padding: 10px;
+}
+
+.category-filter button:hover {
+  background-color: #0984e3; /* Color azul más oscuro al pasar el mouse */
+}

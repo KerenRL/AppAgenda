@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="left-section">
+    <h2>Contactos</h2>
+    <app-contact-list 
+      [contacts]="contacts" 
+      (selectedContact)="displayContactDetails($event)">
+    </app-contact-list>
+  </div>
+
+  <div class="middle-section">
+    <button (click)="startAddContact()">Agregar</button>
+    <button (click)="editContact()">Editar</button>
+    <button (click)="deleteContact()">Eliminar</button>
+
+    <div *ngIf="isAdding" class="add-contact-form">
+      <h3>Agregar Contacto</h3>
+      <label>Nombre:</label>
+      <input [(ngModel)]="newContact.firstName" placeholder="Nombre" />
+      <label>Apellido:</label>
+      <input [(ngModel)]="newContact.lastName" placeholder="Apellido" />
+      <label>Teléfono:</label>
+      <input [(ngModel)]="newContact.phone" placeholder="Teléfono" />
+      <label>Email:</label>
+      <input [(ngModel)]="newContact.email" placeholder="Email" />
+      <label>Categoría:</label>
+      <input [(ngModel)]="newContact.category" placeholder="Categoría" />
+      <button (click)="addContact()">Agregar</button>
+      <button (click)="cancelAdd()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <h2>Favoritos</h2>
+    <app-favorites [favorites]="favorites"></app-favorites>
+    
+    <h2>Categorías</h2>
+    <app-category-filter (filterCategory)="filterCategory($event)"></app-category-filter>
+  </div>
+</div>

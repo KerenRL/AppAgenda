@@ -1,0 +1,7 @@
+<div *ngIf="contact" class="contact-details">
+  <img [src]="contact.photo || 'assets/default-photo.jpg'" alt="Foto de contacto" />
+  <h2>{{ contact.name }}</h2>
+  <p><strong>Teléfono:</strong> {{ contact.phone }}</p>
+  <p><strong>Email:</strong> {{ contact.email }}</p>
+  <button (click)="onToggleFavorite()">{{ contact.favorite ? '❤️' : '🤍' }}</button>
+</div>

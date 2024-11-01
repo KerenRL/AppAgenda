@@ -1,0 +1,15 @@
+.favorites {
+  margin-top: 20px; /* Espacio superior */
+  background-color: #fab1a0; /* Color rosa pastel */
+  padding: 15px; /* Espacio interno */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.favorites div {
+  padding: 10px;
+  border-bottom: 1px solid #b2bec3; /* Separador entre favoritos */
+}
+
+.favorites div:hover {
+  background-color: #ff7675; /* Color rojo pastel al pasar el mouse */
+}
