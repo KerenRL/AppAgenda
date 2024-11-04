@@ -19,6 +19,6 @@ export class EditContactComponent {
   }
 
   exitDetails() {
-    this.exit.emit(); // Emitir el evento para salir
+    this.exit.emit(); 
   }
 }

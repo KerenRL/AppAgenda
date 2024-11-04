@@ -35,11 +35,11 @@ export class AppComponent {
   isEditing: boolean = false;
 
   constructor(private http: HttpClient) {
-    this.fetchContacts(); // Cargar contactos al iniciar
+    this.fetchContacts();
   }
 
   fetchContacts() {
-    this.http.get<Contact[]>('http://54.204.239.6:8000/api/contact/')
+    this.http.get<Contact[]>('http://localhost:8000/api/contact/')
       .subscribe(data => {
         this.contacts = data;
       });
@@ -51,37 +51,37 @@ export class AppComponent {
 
   onSelectContact(contact: Contact) {
     this.selectedContact = contact;
-    this.isEditing = false; // Resetear el estado de edición
+    this.isEditing = false;
   }
 
   onEditContact() {
-    this.isEditing = true; // Activar la edición
+    this.isEditing = true;
   }
 
   onExitContactDetails() {
-    this.selectedContact = null; // Limpiar la selección
-    this.isEditing = false; // Desactivar la edición
+    this.selectedContact = null;
+    this.isEditing = false;
   }
 
   updateContact(updatedContact: Contact) {
-    this.http.put(`http://54.204.239.6:8000/api/contact/${updatedContact.id}`, updatedContact)
+    this.http.put(`http://localhost:8000/api/contact/${updatedContact.id}`, updatedContact)
       .subscribe({
         next: () => {
-          this.fetchContacts(); // Refresca la lista de contactos
-          this.selectedContact = null; // Limpia la selección después de actualizar
-          this.isEditing = false; // Desactivar edición
+          this.fetchContacts();
+          this.selectedContact = null;
+          this.isEditing = false;
         },
         error: (err) => {
-          console.error('Error al actualizar el contacto:', err); // Manejo de errores
+          console.error('Error al actualizar el contacto:', err);
         }
       });
   }
 
   deleteContact(contact: Contact) {
     if (contact) {
-      this.http.delete(`http://54.204.239.6:8000/api/contact/${contact.id}`)
+      this.http.delete(`http://localhost:8000/api/contact/${contact.id}`)
         .subscribe(() => {
-          this.fetchContacts(); // Refrescar la lista de contactos después de eliminar
+          this.fetchContacts();
         });
     }
   }
@@ -91,13 +91,13 @@ export class AppComponent {
   }
 
   removeContact(contact: Contact) {
-    this.http.delete(`http://54.204.239.6:8000/api/contact/${contact.id}`)
+    this.http.delete(`http://localhost:8000/api/contact//${contact.id}`)
       .subscribe({
         next: () => {
           this.contacts = this.contacts.filter(c => c.id !== contact.id);
         },
         error: (err) => {
-          console.error('Error al eliminar el contacto:', err); // Manejo de errores
+          console.error('Error al eliminar el contacto:', err);
         }
       });
   }

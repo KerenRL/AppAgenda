@@ -24,6 +24,6 @@ export class ContactDetailsComponent {
 
   onExitDetails() {
     this.editMode = false;
-    this.exit.emit(); // Emitir el evento para que el componente padre maneje la salida
+    this.exit.emit(); 
   }
 }

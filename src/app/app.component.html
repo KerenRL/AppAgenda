@@ -16,7 +16,6 @@
     [contact]="selectedContact">
   </app-contact-details>
 
-  <!-- Componente Principal -->
 <app-add-contact (contactAdded)="addContact($event)"></app-add-contact>
 <app-delete-contact [contacts]="contacts" (contactDeleted)="removeContact($event)"></app-delete-contact>
 <app-edit-contact *ngIf="selectedContact" [contact]="selectedContact" (contactEdited)="updateContact($event)"></app-edit-contact>

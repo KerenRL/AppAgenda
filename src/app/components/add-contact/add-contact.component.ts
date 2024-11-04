@@ -30,11 +30,11 @@ export class AddContactComponent {
   private http = inject(HttpClient);
 
   addContact() {
-    this.http.post<Contact>('http://54.204.239.6:8000/api/contact/', this.contact)
+    this.http.post<Contact>('http://localhost:8000/api/contact/', this.contact)
       .subscribe({
         next: (response) => {
-          this.contactAdded.emit(response); // Emitir el contacto agregado
-          this.resetForm(); // Reiniciar el formulario
+          this.contactAdded.emit(response);
+          this.resetForm();
         },
         error: (error) => {
           console.error('Error al agregar contacto:', error);
