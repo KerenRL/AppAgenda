@@ -1,39 +1,23 @@
-<div class="container">
-  <div class="left-section">
-    <h2>Contactos</h2>
+<div class="app-container">
+  <header>
+    <h1 class="app-title">Agenda de Contactos</h1>
+  </header>
+  <div id="categories">
+    <app-category-filter (categorySelected)="onCategoryChange($event)"></app-category-filter>
+  </div>
+  <div id="contact-list">
     <app-contact-list 
-      [contacts]="contacts" 
-      (selectedContact)="displayContactDetails($event)">
+      [category]="selectedCategory"
+      (contactSelected)="onSelectContact($event)">
     </app-contact-list>
   </div>
+  <app-contact-details 
+    *ngIf="selectedContact"
+    [contact]="selectedContact">
+  </app-contact-details>
 
-  <div class="middle-section">
-    <button (click)="startAddContact()">Agregar</button>
-    <button (click)="editContact()">Editar</button>
-    <button (click)="deleteContact()">Eliminar</button>
-
-    <div *ngIf="isAdding" class="add-contact-form">
-      <h3>Agregar Contacto</h3>
-      <label>Nombre:</label>
-      <input [(ngModel)]="newContact.firstName" placeholder="Nombre" />
-      <label>Apellido:</label>
-      <input [(ngModel)]="newContact.lastName" placeholder="Apellido" />
-      <label>Teléfono:</label>
-      <input [(ngModel)]="newContact.phone" placeholder="Teléfono" />
-      <label>Email:</label>
-      <input [(ngModel)]="newContact.email" placeholder="Email" />
-      <label>Categoría:</label>
-      <input [(ngModel)]="newContact.category" placeholder="Categoría" />
-      <button (click)="addContact()">Agregar</button>
-      <button (click)="cancelAdd()">Cancelar</button>
-    </div>
-  </div>
-
-  <div class="right-section">
-    <h2>Favoritos</h2>
-    <app-favorites [favorites]="favorites"></app-favorites>
-    
-    <h2>Categorías</h2>
-    <app-category-filter (filterCategory)="filterCategory($event)"></app-category-filter>
-  </div>
+  <!-- Componente Principal -->
+<app-add-contact (contactAdded)="addContact($event)"></app-add-contact>
+<app-delete-contact [contacts]="contacts" (contactDeleted)="removeContact($event)"></app-delete-contact>
+<app-edit-contact *ngIf="selectedContact" [contact]="selectedContact" (contactEdited)="updateContact($event)"></app-edit-contact>
 </div>

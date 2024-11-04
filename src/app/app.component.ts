@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
-import { ContactListComponent } from './components/contact-list/contact-list.component';
-import { ContactDetailsComponent } from './components/contact-details/contact-details.component';
-import { FavoritesComponent } from './components/favorites/favorites.component';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { Contact } from './services/contact.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CategoryFilterComponent } from './components/category-filter/category-filter.component';
+import { ContactDetailsComponent } from './components/contact-details/contact-details.component';
+import { ContactListComponent } from './components/contact-list/contact-list.component';
+import { AddContactComponent } from './components/add-contact/add-contact.component';
+import { DeleteContactComponent } from './components/delete-contact/delete-contact.component';
+import { EditContactComponent } from './components/edit-contact/edit-contact.component';
 
 @Component({
   selector: 'app-root',
@@ -12,71 +16,89 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   imports: [
-    CategoryFilterComponent, 
-    ContactListComponent, 
-    ContactDetailsComponent, 
-    FavoritesComponent,
-    FormsModule
+    CommonModule,
+    RouterOutlet,
+    CategoryFilterComponent,
+    ContactDetailsComponent,
+    ContactListComponent,
+    HttpClientModule,
+    AddContactComponent,
+    DeleteContactComponent,
+    EditContactComponent
   ]
 })
 export class AppComponent {
-  title = 'agenda'; 
+  title = 'agenda';
   selectedCategory: string = '';
-  selectedContact: any = null;
-  favorites: any[] = [];
-  
-  contacts: any[] = []; // Inicializa la lista de contactos aquí
-  newContact = { firstName: '', lastName: '', phone: '', email: '', category: '', photo: '', favorite: false };
-  isAdding = false;  // Para mostrar el formulario de agregar contacto
+  selectedContact: Contact | null = null;
+  contacts: Contact[] = [];
+  isEditing: boolean = false;
 
-  filterCategory(category: string) {
+  constructor(private http: HttpClient) {
+    this.fetchContacts(); // Cargar contactos al iniciar
+  }
+
+  fetchContacts() {
+    this.http.get<Contact[]>('http://54.204.239.6:8000/api/contact/')
+      .subscribe(data => {
+        this.contacts = data;
+      });
+  }
+
+  onCategoryChange(category: string) {
     this.selectedCategory = category;
   }
 
-  displayContactDetails(contact: any) {
+  onSelectContact(contact: Contact) {
     this.selectedContact = contact;
+    this.isEditing = false; // Resetear el estado de edición
   }
 
-  toggleFavoriteHandler(contact: any) {
-    const index = this.favorites.indexOf(contact);
-    if (index === -1) {
-      this.favorites.push(contact);
-    } else {
-      this.favorites.splice(index, 1);
+  onEditContact() {
+    this.isEditing = true; // Activar la edición
+  }
+
+  onExitContactDetails() {
+    this.selectedContact = null; // Limpiar la selección
+    this.isEditing = false; // Desactivar la edición
+  }
+
+  updateContact(updatedContact: Contact) {
+    this.http.put(`http://54.204.239.6:8000/api/contact/${updatedContact.id}`, updatedContact)
+      .subscribe({
+        next: () => {
+          this.fetchContacts(); // Refresca la lista de contactos
+          this.selectedContact = null; // Limpia la selección después de actualizar
+          this.isEditing = false; // Desactivar edición
+        },
+        error: (err) => {
+          console.error('Error al actualizar el contacto:', err); // Manejo de errores
+        }
+      });
+  }
+
+  deleteContact(contact: Contact) {
+    if (contact) {
+      this.http.delete(`http://54.204.239.6:8000/api/contact/${contact.id}`)
+        .subscribe(() => {
+          this.fetchContacts(); // Refrescar la lista de contactos después de eliminar
+        });
     }
   }
 
-  addContact() {
-    if (this.newContact.firstName && this.newContact.phone) {
-      const contactToAdd = { ...this.newContact };
-      this.contacts.push(contactToAdd);
-      this.newContact = { firstName: '', lastName: '', phone: '', email: '', category: '', photo: '', favorite: false };
-      this.isAdding = false; // Ocultar formulario
-    }
+  addContact(contact: Contact) {
+    this.fetchContacts();
   }
 
-  startAddContact() {
-    this.isAdding = true; // Mostrar formulario
-  }
-
-  cancelAdd() {
-    this.isAdding = false; // Ocultar formulario
-  }
-
-  editContact() {
-    if (this.selectedContact) {
-      this.newContact = { ...this.selectedContact }; // Cargar los datos del contacto seleccionado
-      this.isAdding = true; // Mostrar formulario
-    }
-  }
-
-  deleteContact() {
-    if (this.selectedContact) {
-      const index = this.contacts.indexOf(this.selectedContact);
-      if (index !== -1) {
-        this.contacts.splice(index, 1); // Eliminar el contacto
-        this.selectedContact = null; // Limpiar el contacto seleccionado
-      }
-    }
+  removeContact(contact: Contact) {
+    this.http.delete(`http://54.204.239.6:8000/api/contact/${contact.id}`)
+      .subscribe({
+        next: () => {
+          this.contacts = this.contacts.filter(c => c.id !== contact.id);
+        },
+        error: (err) => {
+          console.error('Error al eliminar el contacto:', err); // Manejo de errores
+        }
+      });
   }
 }

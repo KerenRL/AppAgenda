@@ -1,17 +1,20 @@
+/* category-filter.component.css */
 .category-filter {
-  margin-top: 20px; /* Espacio superior */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-.category-filter button {
-  margin: 5px 0; /* Espacio entre los botones */
-  width: 100%; /* Botones ocuparán todo el ancho */
-  background-color: #74b9ff; /* Color azul pastel */
-  color: white; /* Color del texto del botón */
+.category-button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 4px; /* Bordes redondeados */
-  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.category-filter button:hover {
-  background-color: #0984e3; /* Color azul más oscuro al pasar el mouse */
+.category-button:hover {
+  background-color: #0056b3;
 }

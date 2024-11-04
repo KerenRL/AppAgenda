@@ -1,0 +1,9 @@
+<div class="delete-container">
+  <h2>Eliminar Contacto</h2>
+  <ul>
+    <li *ngFor="let contact of contacts">
+      {{ contact.first_name }} {{contact.last_name}} - {{ contact.phone }}
+      <button (click)="deleteContact(contact)">Eliminar</button>
+    </li>
+  </ul>
+</div>

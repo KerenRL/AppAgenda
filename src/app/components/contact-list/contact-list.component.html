@@ -3,8 +3,8 @@
   <button (click)="searchContacts(searchInput.value)">Buscar</button>
 </div>
 <div class="contact-list">
-  <div *ngFor="let contact of filteredContacts()" (click)="selectContact(contact)">
-    {{ contact.name }} ({{ contact.category }}) 
+  <div *ngFor="let contact of filteredContacts" class="contact-item" (click)="selectContact(contact)">
+    {{ contact.first_name }} {{ contact.last_name }} ({{ contact.category }})
   </div>
-  <div *ngIf="filteredContacts().length === 0">No se encontraron contactos.</div>
+  <div *ngIf="filteredContacts.length === 0">No se encontraron contactos.</div>
 </div>

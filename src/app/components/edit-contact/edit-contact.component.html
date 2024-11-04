@@ -1,0 +1,10 @@
+<!-- contact-details.component.html -->
+<div class="contact-details">
+  <h2>Detalles del Contacto</h2>
+  <p><strong>Nombre:</strong> {{ contact?.name }}</p>
+  <p><strong>Teléfono:</strong> {{ contact?.phone }}</p>
+  <p><strong>Correo Electrónico:</strong> {{ contact?.email }}</p>
+  
+  <button (click)="editContact()">Editar Contacto</button>
+  <button (click)="exitDetails()">Salir</button>
+</div>

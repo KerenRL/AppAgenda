@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Contact } from '../../services/contact.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -8,23 +10,44 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent {
-  @Input() contacts: any[] = []; // Propiedad de entrada
-  @Output() selectedContact = new EventEmitter<any>();
+export class ContactListComponent implements OnInit {
+  @Input() category: string = '';
+  @Output() contactSelected = new EventEmitter<Contact>();
+  
+  contacts: Contact[] = []; // Lista de contactos
+  @Input() searchText: string = ''; // Texto de búsqueda
 
-  searchText: string = '';
+  constructor(private http: HttpClient) {}
 
-  filteredContacts() {
-    return this.contacts.filter(contact => 
-      contact.name.toLowerCase().includes(this.searchText.toLowerCase())
+  ngOnInit() {
+    this.fetchContacts(); // Cargar contactos al inicializar
+  }
+
+  // Método para obtener los contactos desde la API
+  fetchContacts() {
+    this.http.get<Contact[]>('http://54.204.239.6:8000/api/contact/') // Cambia la URL si es necesario
+      .subscribe(data => {
+        this.contacts = data;
+      });
+  }
+
+  // Filtro de contactos según categoría y texto de búsqueda
+  get filteredContacts() {
+    return this.contacts.filter(contact =>
+      (this.category ? contact.category === this.category : true) &&
+      `${contact.first_name} ${contact.last_name}`
+        .toLowerCase()
+        .includes(this.searchText.toLowerCase())
     );
   }
 
+  // Actualiza el texto de búsqueda
   searchContacts(value: string) {
     this.searchText = value;
   }
 
-  selectContact(contact: any) {
-    this.selectedContact.emit(contact);
+  // Emite el evento al seleccionar un contacto
+  selectContact(contact: Contact) {
+    this.contactSelected.emit(contact);
   }
 }

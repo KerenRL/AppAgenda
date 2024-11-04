@@ -1,8 +1,6 @@
-<div>
-  <h3>Filtrar por categoría</h3>
-  <ul>
-    <li *ngFor="let category of categories">
-      <button (click)="filterByCategory(category)">{{ category }}</button>
-    </li>
-  </ul>
+<div class="categories">
+  <button (click)="selectCategory('Trabajo')">Trabajo</button>
+  <button (click)="selectCategory('Amigos')">Amigos</button>
+  <button (click)="selectCategory('Familia')">Familia</button>
+  <button (click)="selectCategory('')">Todos</button>
 </div>

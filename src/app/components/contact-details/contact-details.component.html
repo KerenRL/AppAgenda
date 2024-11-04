@@ -1,7 +1,22 @@
-<div *ngIf="contact" class="contact-details">
-  <img [src]="contact.photo || 'assets/default-photo.jpg'" alt="Foto de contacto" />
-  <h2>{{ contact.name }}</h2>
-  <p><strong>Teléfono:</strong> {{ contact.phone }}</p>
-  <p><strong>Email:</strong> {{ contact.email }}</p>
-  <button (click)="onToggleFavorite()">{{ contact.favorite ? '❤️' : '🤍' }}</button>
+<div class="contact-details">
+  <div *ngIf="!editMode">
+    <h3>{{ contact.first_name }} {{ contact.last_name }}</h3>
+    <p>Teléfono: {{ contact.phone }}</p>
+    <p>Email: {{ contact.email }}</p>
+    <button (click)="editMode = true">Editar</button>
+    <button (click)="onExitDetails()">Salir</button>
+  </div>
+
+  <div *ngIf="editMode">
+    <label>Nombre:</label>
+    <input [(ngModel)]="contact.first_name" />
+    <label>Apellido:</label>
+    <input [(ngModel)]="contact.last_name" />
+    <label>Teléfono:</label>
+    <input [(ngModel)]="contact.phone" />
+    <label>Email:</label>
+    <input [(ngModel)]="contact.email" />
+    <button (click)="saveContact()">Guardar</button>
+    <button (click)="editMode = false">Cancelar</button>
+  </div>
 </div>

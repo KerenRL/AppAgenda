@@ -1,23 +1,18 @@
+/* contact-list.component.css */
 .contact-list {
-  max-height: 400px; /* Limitar la altura */
-  overflow-y: auto; /* Habilitar el desplazamiento vertical */
+  list-style: none;
+  padding: 0;
 }
 
-.contact-list div {
+.contact-item {
   padding: 10px;
-  border-bottom: 1px solid #b2bec3; /* Separador entre contactos */
-  cursor: pointer; /* Cambiar el cursor al pasar sobre el contacto */
-  background-color: #dfe6e9; /* Color pastel gris suave */
+  margin: 5px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.contact-list div:hover {
-  background-color: #b2bec3; /* Color al pasar el mouse */
-}
-
-.search {
-  margin-bottom: 15px; /* Espacio entre la barra de búsqueda y la lista */
-}
-
-input[type="text"] {
-  padding: 10px;
+.contact-item:hover {
+  background-color: #f1f1f1;
 }

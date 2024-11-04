@@ -1,0 +1,30 @@
+<div class="form-container">
+  <h2>Agregar Contacto</h2>
+  <form (ngSubmit)="addContact()">
+    <label for="first_name">Nombre:</label>
+    <input type="text" id="first_name" [(ngModel)]="contact.first_name" name="first_name" required />
+
+    <label for="last_name">Apellido:</label>
+    <input type="text" id="last_name" [(ngModel)]="contact.last_name" name="last_name" required />
+
+    <label for="phone">Teléfono:</label>
+    <input type="text" id="phone" [(ngModel)]="contact.phone" name="phone" required />
+
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" id="email" [(ngModel)]="contact.email" name="email" />
+
+    <label for="category">Categoría:</label>
+    <select id="category" [(ngModel)]="contact.category" name="category" required>
+      <option value="Amigos">Amigos</option>
+      <option value="Familia">Familia</option>
+      <option value="Trabajo">Trabajo</option>
+    </select>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="contact.is_favorite" name="is_favorite" />
+      Favorito
+    </label>
+
+    <button type="submit">Agregar</button>
+  </form>
+</div>

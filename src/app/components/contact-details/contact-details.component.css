@@ -1,13 +1,15 @@
+/* contact-details.component.css */
 .contact-details {
-  text-align: center; /* Centrar el contenido */
-  background-color: #ffeaa7; /* Color amarillo pastel */
-  padding: 15px; /* Espacio interno */
-  border-radius: 8px; /* Bordes redondeados */
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.contact-details img {
-  width: 100px; /* Ancho fijo para la imagen */
-  height: 100px; /* Alto fijo para la imagen */
-  border-radius: 50%; /* Hacer la imagen circular */
-  margin-bottom: 15px; /* Espacio inferior */
+.contact-details h2 {
+  margin: 0 0 10px;
+}
+
+.contact-details p {
+  margin: 5px 0;
 }
